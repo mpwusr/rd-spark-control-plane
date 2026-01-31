@@ -1,4 +1,4 @@
-# Rancher Desktop Spark Control Plane (macOS)
+# Rancher Desktop Spark Operator Control Plane (on macOS)
 
 This repository provisions a **local Apache Spark control plane** on **macOS** using **Rancher Desktop (k3s)**.  
 It is designed for **local development, experimentation, demos, and architecture validation** of Spark-on-Kubernetes workflows — **not** for production use.
@@ -115,12 +115,12 @@ sparkapplications.sparkoperator.k8s.io
 
 scheduledsparkapplications.sparkoperator.k8s.io
 
-##MinIO Verification
+## MinIO Verification
 ```bash
 kubectl get ns minio
 kubectl -n minio get pods,svc
 ```
-##Ingress verification
+## Ingress verification
 ```bash
 kubectl -n minio get ingress
 ```
@@ -128,12 +128,12 @@ kubectl -n minio get ingress
 
 http://minio-console.192.168.64.3.sslip.io
 
-##Spark History Server
+## Spark History Server
 ```bash
 kubectl get pods -n spark-history
 kubectl get svc -n spark-history
 ```
-##Access UI
+## Access UI
 Via Ingress
 http://spark-history.192.168.64.3.sslip.io
 
@@ -141,7 +141,7 @@ Via Port Forward
 ```bash
 kubectl -n spark-history port-forward svc/spark-history 18080:18080
 ```
-##Local DNS Configuration (macOS)
+## Local DNS Configuration (macOS)
 
 Rancher Desktop runs Kubernetes inside a VM.
 macOS does not automatically resolve ingress hostnames.
