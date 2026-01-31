@@ -36,4 +36,3 @@ tf-apply:
 
 tf-destroy:
 	cd terraform && terraform destroy -auto-approve
-git status
