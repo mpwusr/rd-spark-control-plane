@@ -1,0 +1,40 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: spark-pi
+  namespace: default
+spec:
+  type: Scala
+  mode: cluster
+  image: apache/spark:3.5.4
+  imagePullPolicy: IfNotPresent
+  mainClass: org.apache.spark.examples.SparkPi
+  mainApplicationFile: local:///opt/spark/examples/jars/spark-examples_2.12-3.5.4.jar
+  arguments:
+    - "10000"
+  sparkVersion: "3.5.4"
+  restartPolicy:
+    type: Never
+
+  sparkConf:
+    spark.eventLog.enabled: "true"
+    spark.eventLog.dir: "s3a://spark-logs/"
+    spark.hadoop.fs.s3a.endpoint: "http://minio.minio.svc.cluster.local:9000"
+    spark.hadoop.fs.s3a.access.key: "minioadmin"
+    spark.hadoop.fs.s3a.secret.key: "minio2026RootPassword"
+    spark.hadoop.fs.s3a.path.style.access: "true"
+    spark.hadoop.fs.s3a.connection.ssl.enabled: "false"
+
+  driver:
+    cores: 1
+    memory: 1g
+    serviceAccount: spark
+    labels:
+      version: 3.5.4
+
+  executor:
+    cores: 1
+    instances: 2
+    memory: 1g
+    labels:
+      version: 3.5.4
