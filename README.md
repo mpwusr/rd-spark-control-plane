@@ -693,6 +693,10 @@ MinIO provides:
 4. **Scale Up:** Adjust resources in `terraform/main.tf` as needed
 
 ---
+# Architecture
+![Platform Architecture](/docs//images/DataPlatformStorage.png)
+![Security Architecture](/docs/images/DataPrivacy.png)
+![Platform In a Box](/docs/images/Homegrownsolutioninabox.png)
 
 ## Contributing
 
