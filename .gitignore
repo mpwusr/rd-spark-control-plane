@@ -1,7 +1,8 @@
 # IntelliJ
 .idea/
 *.iml
-
+# archived files
+archive/
 # Terraform
 .terraform/
 *.tfstate
@@ -16,3 +17,29 @@ terraform.tfvars
 
 # Kube
 .kube/
+
+# ==============================================================================
+# Security - Credentials and Secrets (NEVER commit these!)
+# ==============================================================================
+
+# Environment files with credentials
+.env
+*.env
+.env.local
+.env.*.local
+
+# Docker credentials
+.docker/
+
+# Additional Terraform secrets
+terraform/*.tfvars
+terraform/.terraform.lock.hcl
+
+# Logs that may contain sensitive info
+*.log
+
+# IDE and editor temp files
+.vscode/
+*.swp
+*.swo
+*~
