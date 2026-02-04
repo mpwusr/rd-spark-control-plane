@@ -1,4 +1,4 @@
 # Architecture
-![Platform Architecture](docs/images/DataPlatformStorage.png)
-![Security Architecture](docs/images/DataPrivacy.png)
-![Platform In a Box](docs/images/Homegrownsolutioninabox.png)
+![Platform Architecture](/images/DataPlatformStorage.png)
+![Security Architecture](/images/DataPrivacy.png)
+![Platform In a Box](/images/Homegrownsolutioninabox.png)
