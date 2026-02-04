@@ -85,7 +85,24 @@ Provide a **Spark-native Kubernetes control plane** where:
     - Spark History Server: `http://spark-history.192.168.64.3.sslip.io`
 
 ---
+## Platform Scope & Non-Goals
 
+This repository intentionally focuses on **platform enablement**, not application or data pipeline development.
+
+### In Scope
+- Kubernetes-native **compute orchestration** for analytics workloads
+- Declarative workload submission via **CRDs** (SparkOperator)
+- **Auditability and observability** of compute execution (Spark History)
+- **Object storage abstraction** using S3-compatible APIs
+- Ingress, DNS, and UI exposure patterns consistent with enterprise platforms
+- Infrastructure-as-Code with Terraform for repeatability and control
+
+### Explicitly Out of Scope
+- ETL pipelines, DAGs, or business logic
+- Data modeling or schema design
+- Notebook authoring or interactive analytics
+- End-user Spark application code
+- 
 ## Prerequisites
 
 ### macOS

@@ -22,7 +22,7 @@ variable "enable_kafka" {
 
 variable "spark_history_image" {
   type    = string
-  default = "apache/spark:3.5.4"
+  default = "quay.io/mpwbaruk/spark-s3a:3.5.4"
 }
 
 variable "spark_logs_bucket" {
