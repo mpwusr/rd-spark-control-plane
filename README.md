@@ -102,7 +102,31 @@ This repository intentionally focuses on **platform enablement**, not applicatio
 - Data modeling or schema design
 - Notebook authoring or interactive analytics
 - End-user Spark application code
-- 
+
+## Enterprise & Regulated Environment Considerations
+
+Although this deployment targets local development, the architecture and patterns
+are intentionally aligned with **regulated enterprise environments** such as
+financial services.
+
+Key considerations reflected in this design:
+
+- **Clear trust boundaries**
+    - Dedicated namespaces per platform service
+    - Ingress explicitly defined per UI
+- **Auditability**
+    - Spark event logs persisted to object storage
+    - History Server provides immutable execution visibility
+- **Deterministic infrastructure**
+    - Terraform-managed lifecycle
+    - No imperative `kubectl apply` workflows
+- **Security-first defaults**
+    - No implicit cluster-wide access for workloads
+    - Separation between control plane and user workloads
+
+These patterns map directly to controls commonly required for
+SOX, PCI-DSS, and internal risk governance reviews.
+
 ## Prerequisites
 
 ### macOS
