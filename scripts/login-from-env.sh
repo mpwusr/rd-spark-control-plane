@@ -37,9 +37,9 @@ echo "$QUAY_TOKEN" | docker login quay.io -u "$QUAY_USERNAME" --password-stdin
 
 if [ $? -eq 0 ]; then
     echo ""
-    echo "✓ Login successful!"
+    echo "Login successful!"
 else
     echo ""
-    echo "✗ Login failed"
+    echo "Login failed"
     exit 1
 fi
