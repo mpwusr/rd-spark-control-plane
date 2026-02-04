@@ -127,6 +127,32 @@ Key considerations reflected in this design:
 These patterns map directly to controls commonly required for
 SOX, PCI-DSS, and internal risk governance reviews.
 
+## Multi-Tenancy & Platform Evolution
+
+This control plane is designed to evolve into a **multi-tenant data platform**
+without architectural refactoring.
+
+Planned and supported extensions include:
+
+- **Namespace-per-tenant isolation**
+  - Resource quotas
+  - LimitRanges
+  - RBAC boundaries
+- **Advanced scheduling**
+  - YuniKorn or Volcano for batch and AI workloads
+- **Security & Identity**
+  - OIDC integration (Keycloak / enterprise IdP)
+  - Fine-grained authorization (Ranger / OPA)
+- **GitOps workflows**
+  - ArgoCD or Flux managing Terraform and manifests
+  - Promotion via Git instead of imperative changes
+- **Observability**
+  - Prometheus metrics for Spark workloads
+  - OpenSearch for log aggregation and audit search
+
+The current implementation serves as a **validated control-plane prototype**
+for these capabilities.
+
 ## Prerequisites
 
 ### macOS
