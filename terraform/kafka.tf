@@ -1,4 +1,5 @@
 resource "helm_release" "strimzi" {
+  count      = var.enable_kafka ? 1 : 0
   name       = "strimzi"
   namespace  = "kafka"
   repository = "https://strimzi.io/charts/"
@@ -6,6 +7,8 @@ resource "helm_release" "strimzi" {
   version    = "0.39.0"
 
   create_namespace = true
+  wait             = true
+  timeout          = 600
 
   values = [<<EOF
 watchNamespaces:
@@ -15,7 +18,8 @@ EOF
 }
 
 resource "kubernetes_manifest" "kafka_cluster" {
-  depends_on = [helm_release.strimzi]
+  count      = var.enable_kafka ? 1 : 0
+  depends_on = [helm_release.strimzi[0]]
 
   manifest = {
     apiVersion = "kafka.strimzi.io/v1beta2"
@@ -28,23 +32,17 @@ resource "kubernetes_manifest" "kafka_cluster" {
       kafka = {
         version  = "3.7.0"
         replicas = 1
-        listeners = [
-          {
-            name = "plain"
-            port = 9092
-            type = "internal"
-            tls  = false
-          }
-        ]
-        storage = {
-          type = "ephemeral"
-        }
+        listeners = [{
+          name = "plain"
+          port = 9092
+          type = "internal"
+          tls  = false
+        }]
+        storage = { type = "ephemeral" }
       }
       zookeeper = {
         replicas = 1
-        storage = {
-          type = "ephemeral"
-        }
+        storage  = { type = "ephemeral" }
       }
       entityOperator = {
         topicOperator = {}

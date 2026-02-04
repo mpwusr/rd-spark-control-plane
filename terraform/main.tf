@@ -17,48 +17,61 @@ resource "kubernetes_namespace" "spark_history" {
 # Spark Operator (Helm)
 ########################
 resource "helm_release" "spark_operator" {
-  name       = "spark-operator"
-  namespace  = kubernetes_namespace.spark_operator.metadata[0].name
+  name      = "spark-operator"
+  namespace = kubernetes_namespace.spark_operator.metadata[0].name
 
-  # You can swap these if you use a different chart source.
   repository = "https://kubeflow.github.io/spark-operator"
   chart      = "spark-operator"
-  # version  = "..."  # optionally pin
 
-  set {
-    name  = "webhook.enable"
-    value = "true"
-  }
-
-  # common chart values vary; adjust as needed
+  set = [
+    {
+      name  = "webhook.enable"
+      value = "true"
+    }
+  ]
 }
 
 ########################
 # MinIO (Helm)
 ########################
 resource "helm_release" "minio" {
-  name       = "minio"
-  namespace  = kubernetes_namespace.minio.metadata[0].name
+  name      = "minio"
+  namespace = kubernetes_namespace.minio.metadata[0].name
 
   repository = "https://charts.min.io/"
   chart      = "minio"
-  # version  = "..."  # optionally pin
+  version    = "5.4.0"  # Good to pin the version
 
-  set {
-    name  = "rootUser"
-    value = var.minio_root_user
-  }
+  timeout = 600
+  wait    = true
 
-  set {
-    name  = "rootPassword"
-    value = var.minio_root_password
-  }
+  set = [
+    {
+      name  = "rootUser"
+      value = var.minio_root_user
+    },
+    {
+      name  = "rootPassword"
+      value = var.minio_root_password
+    },
+    {
+      name  = "mode"
+      value = "standalone"  # ← ADD THIS - IT'S CRITICAL!
+    },
+    {
+      name  = "replicas"
+      value = "1"
+    },
 
-  # Keep it simple (single instance)
-  set {
-    name  = "replicas"
-    value = "1"
-  }
+    # --- IMPORTANT: reduce requests so it can schedule on Rancher Desktop ---
+    { name = "resources.requests.memory", value = "512Mi" },
+    { name = "resources.requests.cpu",    value = "250m"  },
+    { name = "resources.limits.memory",   value = "1Gi"   },
+    { name = "resources.limits.cpu",      value = "1"     },
+
+    # --- Make local dev storage smaller (default is huge) ---
+    { name = "persistence.size", value = "10Gi" }
+  ]
 }
 
 ########################

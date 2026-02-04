@@ -15,6 +15,11 @@ variable "minio_root_password" {
   default   = "minio2026RootPassword"
 }
 
+variable "enable_kafka" {
+  type    = bool
+  default = false
+}
+
 variable "spark_history_image" {
   type    = string
   default = "apache/spark:3.5.4"
